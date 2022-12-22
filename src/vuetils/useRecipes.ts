@@ -3,9 +3,6 @@ import { ref } from 'vue'
 
 const allRecipes = ref<Recipe[]>([])
 
-/**
- * Retrieve all todo for the signed in user
- */
 async function fetchRecipes() {
   try {
     const { data: recipes, error } = await supabase
@@ -30,4 +27,29 @@ async function fetchRecipes() {
   }
 }
 
-export { allRecipes, fetchRecipes }
+async function fetchRecipe(slug: string): Promise<Recipe | null> {
+  try {
+    const { data: recipe, error } = await supabase
+      .from('recipes')
+      .select('*')
+      .eq('slug', slug)
+
+    if (error) {
+      console.log('error', error)
+      return null
+    }
+
+    if (recipe === null) {
+      // can probably be smarter here
+      return null
+    }
+
+    console.log('successfully got recipes', allRecipes.value)
+    return recipe[0]
+  } catch (err) {
+    console.error('Error retrieving data from db', err)
+    return null
+  }
+}
+
+export { allRecipes, fetchRecipes, fetchRecipe }

@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12 sm6 md4 lg4 xl4>
-    <v-card :to="'/recipes/' + id" hover>
+    <v-card :to="'/recipes/' + slug" hover>
       <v-img
         :src="thumbnailImage"
         aspect-ratio="2.75"
@@ -37,6 +37,10 @@ export default {
     },
     id: {
       type: Number,
+      required: true
+    },
+    slug: {
+      type: String,
       required: true
     }
   }
