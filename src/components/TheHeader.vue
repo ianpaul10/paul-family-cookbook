@@ -46,12 +46,38 @@
         <v-icon v-else>fas fa-moon</v-icon>
       </v-btn>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat to="/" active-class="blue--text headline">Home</v-btn>
-        <v-btn flat to="/recipes" active-class="blue--text headline"
+        <v-btn
+          flat
+          to="/"
+          active-class="blue--text headline"
+          color="transparent"
+          elevation="0"
+          >Home</v-btn
+        >
+        <v-btn
+          flat
+          to="/recipes"
+          active-class="blue--text headline"
+          color="transparent"
+          elevation="0"
           >Recipes</v-btn
         >
-        <v-btn flat to="/tags" active-class="blue--text headline">Tags</v-btn>
-        <v-btn flat to="/about" active-class="blue--text headline">About</v-btn>
+        <v-btn
+          flat
+          to="/tags"
+          active-class="blue--text headline"
+          color="transparent"
+          elevation="0"
+          >Tags</v-btn
+        >
+        <v-btn
+          flat
+          to="/about"
+          active-class="blue--text headline"
+          color="transparent"
+          elevation="0"
+          >About</v-btn
+        >
         <v-btn @click="changeTheme" depressed small icon>
           <v-icon v-if="goDark == true">fas fa-sun</v-icon>
           <v-icon v-else>fas fa-moon</v-icon>
