@@ -5,13 +5,15 @@
         <RecipePreview
           v-for="recipe in allRecipes"
           :key="recipe.id"
+          :id="recipe.id"
           :title="recipe.title"
-          :excerpt="recipe.created_at"
+          :slug="recipe.slug"
+          :subtitle="recipe.created_at"
           :thumbnailImage="
+            // use default image if one happens to not exist
             recipe.thumbnail_url ||
             'https://cdn.pixabay.com/photo/2016/06/29/16/29/cartoon-1487217_1280.png'
           "
-          :id="recipe.id"
         />
       </v-layout>
     </v-layout>
