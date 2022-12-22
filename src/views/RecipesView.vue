@@ -3,64 +3,30 @@
     <v-layout justify-center align-center class="mt-4 pt-2">
       <v-layout row wrap class="mt-4 pt-2">
         <RecipePreview
-          v-for="post in posts"
-          :key="post.id"
-          :title="post.title"
-          :excerpt="post.previewText"
-          :thumbnailImage="post.thumbnailUrl"
-          :id="post.id"
+          v-for="recipe in allRecipes"
+          :key="recipe.id"
+          :title="recipe.title"
+          :excerpt="recipe.created_at"
+          :thumbnailImage="
+            recipe.thumbnail_url ||
+            'https://cdn.pixabay.com/photo/2016/06/29/16/29/cartoon-1487217_1280.png'
+          "
+          :id="recipe.id"
         />
       </v-layout>
     </v-layout>
   </v-container>
 </template>
 
-<script>
-import RecipePreview from '../components/RecipePreview'
-// import StoryblokClient from 'storyblok-js-client'
-// const token = 'iyPj3vEKmPladyz3zeqKuwtt'
-// const storyapi = new StoryblokClient({
-//   accessToken: token
-// })
+<script lang="ts">
+import { allRecipes, fetchRecipes } from '@/vuetils/useRecipes'
+import RecipePreview from '../components/RecipePreview.vue'
 
 export default {
-  metaInfo: {
-    title: 'Blog',
-    meta: []
-  },
-  data() {
-    return {
-      posts: [
-        {
-          id: 'im-a-recipe',
-          title: "I'm a title",
-          previewText: 'bp.content.summary',
-          thumbnailUrl: 'https://i.imgur.com/zpZDgLw.jpeg'
-        },
-        {
-          id: 'im-a-recipe-2',
-          title: "I'm a title 2",
-          previewText: 'bp.content.summary xyz',
-          thumbnailUrl:
-            'https://d27jswm5an3efw.cloudfront.net/app/uploads/2019/08/image-url.jpg'
-        }
-      ]
-    }
-  },
+  setup() {
+    fetchRecipes()
 
-  created() {
-    this.getStory('home', 'published')
-  },
-
-  methods: {
-    getStory(version) {
-      return {
-        id: 'im-a-recipe',
-        title: "I'm a title",
-        previewText: 'bp.content.summary',
-        thumbnailUrl: 'https://imgur.com/gallery/6a9LvCO'
-      }
-    }
+    return { allRecipes }
   },
 
   components: {

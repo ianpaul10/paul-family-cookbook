@@ -20,7 +20,7 @@
   </v-flex>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     title: {
@@ -32,11 +32,11 @@ export default {
       required: true
     },
     thumbnailImage: {
-      type: String,
+      type: String || null,
       required: true
     },
     id: {
-      type: String,
+      type: Number,
       required: true
     }
   }
