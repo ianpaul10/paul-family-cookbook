@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib/framework'
 
 Vue.use(Vuetify, {
-    iconfont: 'md'
+  iconfont: 'md'
 })
 
-export default new Vuetify({
-})
+export default new Vuetify({})
