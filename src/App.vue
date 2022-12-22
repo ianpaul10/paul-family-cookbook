@@ -27,7 +27,7 @@ export default {
 
   metaInfo: {
     title: 'Home',
-    titleTemplate: "%s ← Eldin's Space",
+    titleTemplate: 'Paul Family Cookbook',
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'description', content: 'Paul Family Cookbook' },
