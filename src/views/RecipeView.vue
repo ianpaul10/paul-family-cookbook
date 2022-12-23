@@ -1,22 +1,29 @@
 <template>
-  <p>recipe.details</p>
+  <v-card elevation="4">
+    <v-card-title
+      ><p>
+        {{ myRecipe?.title }}
+      </p>
+    </v-card-title>
+    <v-cart-text>
+      <p>
+        {{ myRecipe?.details }}
+      </p>
+    </v-cart-text>
+  </v-card>
 </template>
 
 <script lang="ts">
-import { fetchRecipe } from '@/vuetils/useRecipes'
+import { currentRecipe, fetchRecipe } from '@/vuetils/useRecipes'
+import { unref } from 'vue'
+import { Vue } from 'vue-property-decorator'
 
-export default {
-  props: {
-    slug: {
-      type: String,
-      required: true
-    }
-  },
+export default class RecipeView extends Vue {
+  get myRecipe() {
+    const slug = this.$route.params.slug
+    fetchRecipe(slug as string)
 
-  setup(props: any) {
-    const recipe = fetchRecipe(props.slug)
-
-    return { recipe }
+    return unref(currentRecipe)
   }
 }
 </script>

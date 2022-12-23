@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import { ref } from 'vue'
 
 const allRecipes = ref<Recipe[]>([])
+const currentRecipe = ref<Recipe>()
 
 async function fetchRecipes() {
   try {
@@ -27,7 +28,7 @@ async function fetchRecipes() {
   }
 }
 
-async function fetchRecipe(slug: string): Promise<Recipe | null> {
+async function fetchRecipe(slug: string) {
   try {
     const { data: recipe, error } = await supabase
       .from('recipes')
@@ -36,20 +37,20 @@ async function fetchRecipe(slug: string): Promise<Recipe | null> {
 
     if (error) {
       console.log('error', error)
-      return null
+      throw new Error('Error when getting info from supabase.')
     }
 
     if (recipe === null) {
       // can probably be smarter here
-      return null
+      throw new Error('Recipe not found.')
     }
 
+    currentRecipe.value = recipe[0]
     console.log('successfully got recipes', allRecipes.value)
-    return recipe[0]
   } catch (err) {
     console.error('Error retrieving data from db', err)
-    return null
+    throw new Error('Unhandled error.')
   }
 }
 
-export { allRecipes, fetchRecipes, fetchRecipe }
+export { allRecipes, currentRecipe, fetchRecipes, fetchRecipe }
