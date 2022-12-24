@@ -11,9 +11,9 @@
       <v-card-title primary-title>
         <div>
           <h3 class="headline mb-0">{{ title }}</h3>
-          <div>
+          <!-- <div>
             <p class="blue--text font-weight-medium">{{ subtitle }}</p>
-          </div>
+          </div> -->
         </div>
       </v-card-title>
     </v-card>

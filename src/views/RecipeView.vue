@@ -22,22 +22,35 @@
 </template>
 
 <script lang="ts">
-import { currentRecipe, fetchRecipe } from '@/vuetils/useRecipes'
+import { allRecipes, fetchRecipes } from '@/vuetils/useRecipes'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { unref } from 'vue'
 import { Vue } from 'vue-property-decorator'
+import Component from 'vue-class-component'
 
+@Component
 export default class RecipeView extends Vue {
+  // eslint-disable-next-line no-undef
+  curRec: Recipe | undefined | null = null
+  curSlug: string = ''
+
   get currentRecipe() {
     const slug = this.$route.params.slug
-    fetchRecipe(slug as string)
 
-    return unref(currentRecipe)
+    if (this.curRec === null || this.curSlug !== slug) {
+      fetchRecipes()
+      const curRec = allRecipes.value.find((x) => x.slug === slug)
+
+      this.curSlug = slug
+      this.curRec = curRec
+    }
+
+    // eslint-disable-next-line no-undef
+    return this.curRec as Recipe
   }
 
   get HtmlBody(): string {
-    const dirtyHtml = marked(this.currentRecipe?.details)
+    const dirtyHtml = marked(this.currentRecipe.details)
     console.log(dirtyHtml)
     return DOMPurify.sanitize(dirtyHtml).replace(/(?:\r\n|\r|\n|\t)/g, '')
   }

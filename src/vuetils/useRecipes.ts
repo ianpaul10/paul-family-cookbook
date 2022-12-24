@@ -9,7 +9,7 @@ async function fetchRecipes() {
     const { data: recipes, error } = await supabase
       .from('recipes')
       .select('*')
-      .order('created_at')
+      .order('title')
 
     if (error) {
       console.log('error', error)
@@ -22,7 +22,8 @@ async function fetchRecipes() {
     }
 
     allRecipes.value = recipes
-    console.log('successfully got recipes', allRecipes.value)
+
+    console.log('successfully got recipes', recipes)
   } catch (err) {
     console.error('Error retrieving data from db', err)
   }
@@ -37,19 +38,19 @@ async function fetchRecipe(slug: string) {
 
     if (error) {
       console.log('error', error)
-      throw new Error('Error when getting info from supabase.')
+      return
     }
 
     if (recipe === null) {
       // can probably be smarter here
-      throw new Error('Recipe not found.')
+      // currentRecipe.value = null
+      return
     }
 
-    currentRecipe.value = recipe[0]
     console.log('successfully got recipes', allRecipes.value)
+    currentRecipe.value = recipe[0]
   } catch (err) {
     console.error('Error retrieving data from db', err)
-    throw new Error('Unhandled error.')
   }
 }
 
