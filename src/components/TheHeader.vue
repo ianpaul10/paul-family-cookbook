@@ -11,22 +11,12 @@
       <v-list class="pt-4">
         <v-list-tile active-class="blue--text" to="/">
           <v-list-tile-content>
-            <v-list-tile-title>HOME</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile active-class="blue--text" to="/recipes">
-          <v-list-tile-content>
             <v-list-tile-title>RECIPES</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile active-class="blue--text" to="/tags">
           <v-list-tile-content>
             <v-list-tile-title>TAGS</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile active-class="blue--text" to="/about">
-          <v-list-tile-content>
-            <v-list-tile-title>ABOUT</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -52,14 +42,6 @@
           active-class="blue--text headline"
           color="transparent"
           elevation="0"
-          >Home</v-btn
-        >
-        <v-btn
-          flat
-          to="/recipes"
-          active-class="blue--text headline"
-          color="transparent"
-          elevation="0"
           >Recipes</v-btn
         >
         <v-btn
@@ -69,14 +51,6 @@
           color="transparent"
           elevation="0"
           >Tags</v-btn
-        >
-        <v-btn
-          flat
-          to="/about"
-          active-class="blue--text headline"
-          color="transparent"
-          elevation="0"
-          >About</v-btn
         >
         <v-btn @click="changeTheme" depressed small icon>
           <v-icon v-if="goDark == true">fas fa-sun</v-icon>
@@ -89,6 +63,7 @@
 
 <script>
 export default {
+  name: 'TheHeader',
   props: {
     goDark: {
       type: Boolean
@@ -101,7 +76,29 @@ export default {
   },
   methods: {
     changeTheme() {
+      console.log('Theme changed')
+      console.log(this.goDark)
+
       this.$emit('changeTheme', this.goDark)
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  },
+  mounted() {
+    const theme = localStorage.getItem('darkTheme')
+
+    // Check if the user has set the theme state before
+    if (theme) {
+      if (theme === 'true') {
+        this.$vuetify.theme.dark = true
+      } else {
+        this.$vuetify.theme.dark = false
+      }
+    } else if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      this.$vuetify.theme.dark = true
+      localStorage.setItem('darkTheme', this.$vuetify.theme.dark.toString())
     }
   }
 }
